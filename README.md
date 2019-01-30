@@ -81,8 +81,19 @@ fetch("string representing a URL to a data source")
 ```
 
 The `then()` takes a function. Here is where you tell JavaScript to ask the
-network response to be turned into JSON. When starting out, this first
-`then()` will pretty much be the same across all your uses of `fetch()`.
+**network response** to be turned into JSON. That is, the thing `fetch()`
+returns ***is not JSON*** it is an instance of a "Network Response" class. If,
+say, the network is down, ***this*** is where you would handle that logic. We're
+not doing that, for simplicity's sake here. You might want to do conditional logic
+based on whether the response was redirected, or required authentication or was
+over `https://` (secure) versus `http://` (insecure).
+
+In a world where everything is working, you want to invoke `.json()` _on the network
+response_ in order to get the page's content. Running and returning (remember the
+automatic return in `=>` functions!) `.json()` on the network request object means
+that the _next_ `then()` clause will have, as its first argument, a real JSON string.
+
+When starting out, this first `then()` will pretty much be the same across all your uses of `fetch()`.
 
 The final `then()` is when you actually get some JSON passed in. You can then
 do something with the JSON. The easiest thing is to `console.log()` the JSON
